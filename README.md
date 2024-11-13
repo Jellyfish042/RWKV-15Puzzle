@@ -1,6 +1,6 @@
 # RWKV-15PUZZLE
 
-A specialized RWKV model for solving 15 Puzzle
+A specialized RWKV model for solving 15-puzzle problems
 
 ![demo](./assets/demo.gif)
 
@@ -15,7 +15,7 @@ A specialized RWKV model for solving 15 Puzzle
 
 ## Model
 
-The current model is a specialized RWKV-v6 model trained on 500k 15-puzzle samples (~2.3B tokens) specifically for solving 15 puzzle puzzles.
+The current model is a specialized RWKV-v6 model trained on 500k 15-puzzle samples (~2.3B tokens) specifically for solving 15-puzzle problems.
 
 Model specifications:
 - Parameters: ~4M
