@@ -11,7 +11,7 @@ A specialized RWKV model for solving 15 Puzzle
 
 ## Quick Start
 
-- Run `demo.py` or `minimum_inference.py` to 
+- Run `demo.py` or `minimum_inference.py`
 
 ## Model
 
