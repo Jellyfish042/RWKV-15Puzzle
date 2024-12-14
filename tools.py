@@ -1,4 +1,42 @@
 import random
+import copy
+
+
+class Board:
+    def __init__(self, board):
+        self.board = copy.deepcopy(board)
+
+    def __eq__(self, other):
+        return self.board == other.board
+
+    def __str__(self):
+        formatted_rows = []
+        for row in self.board:
+            # formatted_row = [str(num).rjust(2) for num in row]
+            formatted_row = [str(num).ljust(3) for num in row]
+            formatted_rows.append("".join(formatted_row))
+        return "<board>\n" + "\n".join(formatted_rows) + "\n</board>"
+        # return "<board>\n" + "\n".join(" ".join(str(cell) for cell in row) for row in self.board) + "\n</board>"
+
+    def locate(self, number):
+        for i in range(4):
+            for j in range(4):
+                if self.board[i][j] == number:
+                    return (i, j)
+
+    def move(self, direction):
+        direction = direction.lower()
+        i, j = self.locate(0)
+        if direction == "up":
+            self.board[i][j], self.board[i - 1][j] = self.board[i - 1][j], self.board[i][j]
+        elif direction == "down":
+            self.board[i][j], self.board[i + 1][j] = self.board[i + 1][j], self.board[i][j]
+        elif direction == "left":
+            self.board[i][j], self.board[i][j - 1] = self.board[i][j - 1], self.board[i][j]
+        elif direction == "right":
+            self.board[i][j], self.board[i][j + 1] = self.board[i][j + 1], self.board[i][j]
+        else:
+            raise ValueError("Invalid direction")
 
 
 def count_inversions(numbers):
@@ -24,8 +62,36 @@ def is_solvable(puzzle):
     return (blank_row % 2 == 0) == (inversions % 2 == 1)
 
 
-def generate_15_puzzle(seed):
+def generate_15_puzzle(seed, reverse_rate=0.2, reverse_steps=15):
     random.seed(seed)
+    
+    # reverse play to generate ood sample
+    if random.random() < reverse_rate:
+        numbers = list(range(1, 16)) + [0]  # 0-15
+        numbers = [numbers[i : i + 4] for i in range(0, 16, 4)]
+        puzzle = Board(numbers)
+        for _ in range(reverse_steps):
+            # direction = random.choice(["UP", "DOWN", "LEFT", "RIGHT"])
+            if puzzle.locate(0) == (0, 0):
+                direction = random.choice(["DOWN", "RIGHT"])
+            elif puzzle.locate(0) == (0, 3):
+                direction = random.choice(["DOWN", "LEFT"])
+            elif puzzle.locate(0) == (3, 0):
+                direction = random.choice(["UP", "RIGHT"])
+            elif puzzle.locate(0) == (3, 3):
+                direction = random.choice(["UP", "LEFT"])
+            elif puzzle.locate(0)[0] == 0:
+                direction = random.choice(["DOWN", "LEFT", "RIGHT"])
+            elif puzzle.locate(0)[0] == 3:
+                direction = random.choice(["UP", "LEFT", "RIGHT"])
+            elif puzzle.locate(0)[1] == 0:
+                direction = random.choice(["UP", "DOWN", "RIGHT"])
+            elif puzzle.locate(0)[1] == 3:
+                direction = random.choice(["UP", "DOWN", "LEFT"])
+            else:
+                direction = random.choice(["UP", "DOWN", "LEFT", "RIGHT"])
+            puzzle.move(direction)
+        return puzzle.board
 
     numbers = list(range(16))  # 0-15
     random.shuffle(numbers)
@@ -81,3 +147,8 @@ def is_solution(puzzle, moves):
         space_row, space_col = new_row, new_col
 
     return current == target
+
+
+if __name__ == '__main__':
+    puzzle = generate_15_puzzle(0, 1, 15)
+    print(puzzle)

@@ -10,43 +10,6 @@ import os
 from functools import partial
 
 
-class Board:
-    def __init__(self, board):
-        self.board = copy.deepcopy(board)
-
-    def __eq__(self, other):
-        return self.board == other.board
-
-    def __str__(self):
-        formatted_rows = []
-        for row in self.board:
-            # formatted_row = [str(num).rjust(2) for num in row]
-            formatted_row = [str(num).ljust(3) for num in row]
-            formatted_rows.append("".join(formatted_row))
-        return "<board>\n" + "\n".join(formatted_rows) + "\n</board>"
-        # return "<board>\n" + "\n".join(" ".join(str(cell) for cell in row) for row in self.board) + "\n</board>"
-
-    def locate(self, number):
-        for i in range(4):
-            for j in range(4):
-                if self.board[i][j] == number:
-                    return (i, j)
-
-    def move(self, direction):
-        direction = direction.lower()
-        i, j = self.locate(0)
-        if direction == "up":
-            self.board[i][j], self.board[i - 1][j] = self.board[i - 1][j], self.board[i][j]
-        elif direction == "down":
-            self.board[i][j], self.board[i + 1][j] = self.board[i + 1][j], self.board[i][j]
-        elif direction == "left":
-            self.board[i][j], self.board[i][j - 1] = self.board[i][j - 1], self.board[i][j]
-        elif direction == "right":
-            self.board[i][j], self.board[i][j + 1] = self.board[i][j + 1], self.board[i][j]
-        else:
-            raise ValueError("Invalid direction")
-
-
 def generate_path(start, end):
     """
     Generate a path from start to end point on a 4x4 board
