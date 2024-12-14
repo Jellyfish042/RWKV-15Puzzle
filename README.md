@@ -15,7 +15,7 @@ A specialized RWKV model for solving 15-puzzle problems
 
 ## Model
 
-The current model is a specialized RWKV-v6 model trained on 500k 15-puzzle samples (~2.3B tokens) specifically for solving 15-puzzle problems.
+The current model `rwkv_15puzzle_20241214.pth` is a specialized RWKV-v6 model trained on 1m 15-puzzle samples (~2.1B tokens) specifically for solving 15-puzzle problems.
 
 Model specifications:
 - Parameters: ~4M
@@ -31,10 +31,10 @@ The model was trained using the [RWKV-LM](https://github.com/BlinkDL/RWKV-LM) re
 Hyperparameters:
 - `M_BSZ`: 64
 - `CTX_LEN`: 8192
-- `LR`: 8e-4 to 3e-5
+- `LR`: 12e-4 to 3e-5
 - `ADAM_EPS`: 1e-18
 - `ADAM_BETA1`: 0.9
-- `ADAM_BETA2`: 0.9999
-- `WEIGHT_DECAY`: 0.01
+- `ADAM_BETA2`: 0.999
+- `WEIGHT_DECAY`: 0.1
 
 ![Training Loss Curve](./assets/loss.png)

@@ -7,7 +7,7 @@ from rwkv_model import RWKV
 from rwkv.utils import PIPELINE, PIPELINE_ARGS
 from rwkv.rwkv_tokenizer import TRIE_TOKENIZER
 
-model = RWKV(model="rwkv-final.pth", strategy="cuda fp16", verbose=False)
+model = RWKV(model="rwkv_15puzzle_20241214.pth", strategy="cuda fp16", verbose=False)
 pipeline = PIPELINE(model, "rwkv_vocab_v20230424")
 pipeline.tokenizer = TRIE_TOKENIZER("puzzle15_vocab.txt")
 gen_args = PIPELINE_ARGS(top_k=1, alpha_frequency=0, alpha_presence=0, token_stop=[59])

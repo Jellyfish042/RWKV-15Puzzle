@@ -155,7 +155,12 @@ def solve(board, logger):
                 if board.locate(3) == (0, 3) or (board.locate(0) == (0, 3) and board.locate(3) == (1, 3)):
                     logger.print_and_log("[Special case (A)]")
                     logger.print_and_log("=> Move blank to (1, 1) ")
-                    mask = ((False, False, False, True), (True, True, True, True), (True, True, True, True), (True, True, True, True))
+                    mask = (
+                        (False, False, False, True),
+                        (True, True, True, True),
+                        (True, True, True, True),
+                        (True, True, True, True),
+                    )
                     blank_path, _ = find_shortest_path(board.locate(0), (1, 1), mask)
                     for blank_direction in blank_path:
                         board.move(blank_direction)
@@ -168,7 +173,7 @@ def solve(board, logger):
                         logger.print_and_log(f"> Move {direction} ")
                         logger.print_and_log(str(board))
                     all_steps += FORMULA_A
-                    logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
+                    # logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
                     continue
                 else:
                     logger.print_and_log("[Not special case]")
@@ -177,7 +182,12 @@ def solve(board, logger):
                 if board.locate(7) == (1, 3) or (board.locate(0) == (1, 3) and board.locate(7) == (2, 3)):
                     logger.print_and_log("[Special case (A)]")
                     logger.print_and_log("=> Move blank to (2, 1) ")
-                    mask = ((False, False, False, False), (False, False, False, True), (True, True, True, True), (True, True, True, True))
+                    mask = (
+                        (False, False, False, False),
+                        (False, False, False, True),
+                        (True, True, True, True),
+                        (True, True, True, True),
+                    )
                     blank_path, _ = find_shortest_path(board.locate(0), (2, 1), mask)
                     for blank_direction in blank_path:
                         board.move(blank_direction)
@@ -190,7 +200,7 @@ def solve(board, logger):
                         logger.print_and_log(f"> Move {direction} ")
                         logger.print_and_log(str(board))
                     all_steps += FORMULA_A
-                    logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
+                    # logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
                     continue
                 else:
                     logger.print_and_log("[Not special case]")
@@ -199,7 +209,12 @@ def solve(board, logger):
                 if board.locate(9) == (3, 0) or (board.locate(0) == (3, 0) and board.locate(9) == (3, 1)):
                     logger.print_and_log("[Special case (B)]")
                     logger.print_and_log("=> Move blank to (3, 0) ")
-                    mask = ((False, False, False, False), (False, False, False, False), (False, True, True, True), (True, True, True, True))
+                    mask = (
+                        (False, False, False, False),
+                        (False, False, False, False),
+                        (False, True, True, True),
+                        (True, True, True, True),
+                    )
                     blank_path, _ = find_shortest_path(board.locate(0), (3, 0), mask)
                     for blank_direction in blank_path:
                         board.move(blank_direction)
@@ -212,7 +227,7 @@ def solve(board, logger):
                         logger.print_and_log(f"> Move {direction} ")
                         logger.print_and_log(str(board))
                     all_steps += FORMULA_B
-                    logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
+                    # logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
                     continue
                 else:
                     logger.print_and_log("[Not special case]")
@@ -221,7 +236,12 @@ def solve(board, logger):
                 if board.locate(10) == (3, 1) or (board.locate(0) == (3, 1) and board.locate(10) == (3, 2)):
                     logger.print_and_log("[Special case (B)]")
                     logger.print_and_log("=> Move blank to (3, 1) ")
-                    mask = ((False, False, False, False), (False, False, False, False), (False, False, True, True), (False, True, True, True))
+                    mask = (
+                        (False, False, False, False),
+                        (False, False, False, False),
+                        (False, False, True, True),
+                        (False, True, True, True),
+                    )
                     blank_path, _ = find_shortest_path(board.locate(0), (3, 1), mask)
                     for blank_direction in blank_path:
                         board.move(blank_direction)
@@ -234,13 +254,15 @@ def solve(board, logger):
                         logger.print_and_log(f"> Move {direction} ")
                         logger.print_and_log(str(board))
                     all_steps += FORMULA_B
-                    logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
+                    # logger.print_and_log(f"Path taken so far: {format_path(all_steps)}\n")
                     continue
                 else:
                     logger.print_and_log("[Not special case]")
 
             # coord_path, direction_path = generate_path(board.locate(target_number), NUMBER_TARGET[target_number])
-            direction_path, coord_path = find_shortest_path(board.locate(target_number), NUMBER_TARGET[target_number], MASK[step])
+            direction_path, coord_path = find_shortest_path(
+                board.locate(target_number), NUMBER_TARGET[target_number], MASK[step]
+            )
             coord_path = coord_path[1:]
             logger.print_and_log(f"=> Planned path: {format_coords(coord_path)}")
             for direction, target_position in zip(direction_path, coord_path):
@@ -266,7 +288,12 @@ def solve(board, logger):
         elif "Place" in step:
             if step == "### Step 5: Place 3 and 4 in correct position":
                 logger.print_and_log("=> Move blank to (0, 3) ")
-                mask = ((False, False, False, True), (True, True, False, True), (True, True, True, True), (True, True, True, True))
+                mask = (
+                    (False, False, False, True),
+                    (True, True, False, True),
+                    (True, True, True, True),
+                    (True, True, True, True),
+                )
                 blank_path, _ = find_shortest_path(board.locate(0), (0, 3), mask)
                 for blank_direction in blank_path:
                     board.move(blank_direction)
@@ -281,7 +308,12 @@ def solve(board, logger):
                 all_steps += ["LEFT", "DOWN"]
             elif step == "### Step 10: Place 7 and 8 in correct position":
                 logger.print_and_log("=> Move blank to (1, 3) ")
-                mask = ((False, False, False, False), (False, False, False, True), (True, True, False, True), (True, True, True, True))
+                mask = (
+                    (False, False, False, False),
+                    (False, False, False, True),
+                    (True, True, False, True),
+                    (True, True, True, True),
+                )
                 blank_path, _ = find_shortest_path(board.locate(0), (1, 3), mask)
                 for blank_direction in blank_path:
                     board.move(blank_direction)
@@ -296,7 +328,12 @@ def solve(board, logger):
                 all_steps += ["LEFT", "DOWN"]
             elif step == "### Step 13: Place 9 and 13 in correct position":
                 logger.print_and_log("=> Move blank to (3, 0) ")
-                mask = ((False, False, False, False), (False, False, False, False), (False, False, True, True), (True, True, True, True))
+                mask = (
+                    (False, False, False, False),
+                    (False, False, False, False),
+                    (False, False, True, True),
+                    (True, True, True, True),
+                )
                 blank_path, _ = find_shortest_path(board.locate(0), (3, 0), mask)
                 for blank_direction in blank_path:
                     board.move(blank_direction)
@@ -311,7 +348,12 @@ def solve(board, logger):
                 all_steps += ["UP", "RIGHT"]
             elif step == "### Step 16: Place 10 and 14 in correct position":
                 logger.print_and_log("=> Move blank to (3, 1) ")
-                mask = ((False, False, False, False), (False, False, False, False), (False, False, False, True), (False, True, True, True))
+                mask = (
+                    (False, False, False, False),
+                    (False, False, False, False),
+                    (False, False, False, True),
+                    (False, True, True, True),
+                )
                 blank_path, _ = find_shortest_path(board.locate(0), (3, 1), mask)
                 for blank_direction in blank_path:
                     board.move(blank_direction)
@@ -335,7 +377,7 @@ def solve(board, logger):
                 logger.print_and_log(str(board))
             logger.print_and_log("[Finetune complete]")
 
-        logger.print_and_log(f"Path taken so far: {format_path(all_steps)}")
+        # logger.print_and_log(f"Path taken so far: {format_path(all_steps)}")
 
     logger.print_and_log("</reasoning>\n")
     logger.print_and_log(f"<output>\n{format_path(all_steps)}\n</output>\n")
@@ -378,18 +420,78 @@ STEPS = [
     "### Step 17: finetune 11, 12, 15",
 ]
 MASK = {
-    "### Step 1: Move 1 to (0, 0)": ((True, True, True, True), (True, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 2: Move 2 to (0, 1)": ((False, True, True, True), (True, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 3: Move 4 to (0, 2)": ((False, False, True, True), (True, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 4: Move 3 to (1, 2)": ((False, False, False, True), (True, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 6: Move 5 to (1, 0)": ((False, False, False, False), (True, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 7: Move 6 to (1, 1)": ((False, False, False, False), (False, True, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 8: Move 8 to (1, 2)": ((False, False, False, False), (False, False, True, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 9: Move 7 to (2, 2)": ((False, False, False, False), (False, False, False, True), (True, True, True, True), (True, True, True, True)),
-    "### Step 11: Move 13 to (2, 0)": ((False, False, False, False), (False, False, False, False), (True, True, True, True), (True, True, True, True)),
-    "### Step 12: Move 9 to (2, 1)": ((False, False, False, False), (False, False, False, False), (False, True, True, True), (True, True, True, True)),
-    "### Step 14: Move 14 to (2, 1)": ((False, False, False, False), (False, False, False, False), (False, True, True, True), (False, True, True, True)),
-    "### Step 15: Move 10 to (2, 2)": ((False, False, False, False), (False, False, False, False), (False, False, True, True), (False, True, True, True)),
+    "### Step 1: Move 1 to (0, 0)": (
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 2: Move 2 to (0, 1)": (
+        (False, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 3: Move 4 to (0, 2)": (
+        (False, False, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 4: Move 3 to (1, 2)": (
+        (False, False, False, True),
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 6: Move 5 to (1, 0)": (
+        (False, False, False, False),
+        (True, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 7: Move 6 to (1, 1)": (
+        (False, False, False, False),
+        (False, True, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 8: Move 8 to (1, 2)": (
+        (False, False, False, False),
+        (False, False, True, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 9: Move 7 to (2, 2)": (
+        (False, False, False, False),
+        (False, False, False, True),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 11: Move 13 to (2, 0)": (
+        (False, False, False, False),
+        (False, False, False, False),
+        (True, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 12: Move 9 to (2, 1)": (
+        (False, False, False, False),
+        (False, False, False, False),
+        (False, True, True, True),
+        (True, True, True, True),
+    ),
+    "### Step 14: Move 14 to (2, 1)": (
+        (False, False, False, False),
+        (False, False, False, False),
+        (False, True, True, True),
+        (False, True, True, True),
+    ),
+    "### Step 15: Move 10 to (2, 2)": (
+        (False, False, False, False),
+        (False, False, False, False),
+        (False, False, True, True),
+        (False, True, True, True),
+    ),
 }
 REVERSE_DIRECTION = {"UP": "DOWN", "DOWN": "UP", "LEFT": "RIGHT", "RIGHT": "LEFT"}
 FORMULA_A = ["UP", "RIGHT", "RIGHT", "DOWN", "LEFT", "UP", "LEFT", "DOWN"]

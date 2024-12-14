@@ -79,7 +79,7 @@ class ModernFifteenPuzzle:
 
         # self.reasoning_text = tk.Text(text_frame, wrap=tk.WORD, bg=self.colors["button_bg"], fg=self.colors["tile_text"], font=("Consolas", 12), padx=10, pady=10, maxundo=0)
         self.reasoning_text = tk.Text(text_frame, wrap=tk.WORD, bg=self.colors["button_bg"], fg=self.colors["tile_text"], font=("Consolas", 12), padx=10, pady=10, maxundo=0)
-        
+
         self.reasoning_text.pack(expand=True, fill="both")
 
         self.reasoning_text.tag_configure("move", foreground="#9ece6a")
@@ -122,6 +122,7 @@ class ModernFifteenPuzzle:
                 try:
                     self.model.solve(self, recall)
                 finally:
+
                     def restore():
                         self.set_buttons_state("normal")
                         self.manual_control = True
@@ -262,10 +263,10 @@ class ModernFifteenPuzzle:
 
     def update_reasoning(self, text):
         # print(text, end='', flush=True)
-        
-        if text in ['UP ', 'DOWN ', 'LEFT ', 'RIGHT ']:
-            text += '\n'
-        
+
+        # if text in ["UP ", "DOWN ", "LEFT ", "RIGHT "]:
+        #     text += "\n"
+
         self.reasoning_text.configure(state="normal")
 
         last_line_start = self.reasoning_text.index("end-1c linestart")
@@ -273,7 +274,7 @@ class ModernFifteenPuzzle:
         current_last_line = self.reasoning_text.get(last_line_start, last_line_end)
 
         self.reasoning_text.insert(tk.END, text)
-        
+
         # max_lines = 50
         # total_lines = int(self.reasoning_text.index('end-1c').split('.')[0])
         # if total_lines > max_lines:
@@ -281,16 +282,17 @@ class ModernFifteenPuzzle:
         #     self.reasoning_text.delete("1.0", f"{lines_to_delete + 1}.0")
 
         if current_last_line.startswith("> Move") or text.strip().startswith("> Move"):
+            print(current_last_line)
             current_line_start = self.reasoning_text.index("end-1c linestart")
             current_line_end = self.reasoning_text.index("end-1c")
             self.reasoning_text.tag_remove("move", current_line_start, current_line_end)
             self.reasoning_text.tag_add("move", current_line_start, current_line_end)
 
         self.reasoning_text.see(tk.END)
-        
+
         # last_line = self.reasoning_text.index("end-1c linestart")
         # self.reasoning_text.see(last_line)
-        
+
         self.reasoning_text.configure(state="disabled")
 
     def flatten_initial_state(self, initial_state):
@@ -375,7 +377,7 @@ class DummyModel:
         from rwkv.utils import PIPELINE, PIPELINE_ARGS
         from rwkv.rwkv_tokenizer import TRIE_TOKENIZER
 
-        self.model = RWKV(model="rwkv-final.pth", strategy="cuda fp16", verbose=False)
+        self.model = RWKV(model=MODEL_PATH, strategy="cuda fp16", verbose=False)
         self.pipeline = PIPELINE(self.model, "rwkv_vocab_v20230424")
         self.pipeline.tokenizer = TRIE_TOKENIZER("puzzle15_vocab.txt")
         self.gen_args = PIPELINE_ARGS(top_k=1, alpha_frequency=0, alpha_presence=0, token_stop=[59])
@@ -429,4 +431,7 @@ def main():
 
 
 if __name__ == "__main__":
+    
+    MODEL_PATH = 'rwkv_15puzzle_20241214.pth'
+    
     main()
